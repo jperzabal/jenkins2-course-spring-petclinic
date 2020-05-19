@@ -24,13 +24,7 @@ pipeline{
                 //To see results of testing
                 step([$class: 'JUnitResultArchiver', testResults: '\\target\\surefire-reports\\TEST-*.xml'])
                 
-				input{
-					message "Guardar archivos"
-					ok "Simona la mona"
-					parameters{
-					
-					}
-				}
+				input message: "¿Quieres continuar?", ok: "Simona la mona"
                 //We save the jar file (commented line is from newer version of jenkins, trying tutorial one below)
                 //archiveArtifacts "{project_path}target\\*.jar"     --New version
                 step([$class: 'ArtifactArchiver', 

@@ -38,6 +38,12 @@ pipeline{
 	post{
 		always{
 			echo "YESSS!!"
-		}		
+		}
+		success{
+			echo "Si seguistes!!"
+		}
+		failure{
+			echo ":("
+		}
 	}		
 }

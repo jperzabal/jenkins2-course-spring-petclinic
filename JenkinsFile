@@ -1,0 +1,38 @@
+
+// To allocate a workspace (Master - Agent model of Jenkins)
+node {
+    
+    // This is the newer way of staging, the older one is deprecated and takes a concurrency parameter (which I guess its not needed because of the blocks)
+    /*stage('checkout') {
+        // some block
+    }*/
+    stage 'checkout'
+    // Clone repository in working space JPM
+    git 'https://github.com/jperzabal/jenkins2-course-spring-petclinic.git'
+    
+    def project_path = "spring-boot-samples\\spring-boot-sample-atmosphere"
+    
+    //To ensure we get the wrong test
+    try{
+        stage 'build'
+        bat label: '', script: 'mvn clean verify'
+    }catch(Exception e){
+        
+    }
+    
+    stage 'archivar jar'
+    
+    // To see the results of code coverage
+    publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, 
+    keepAll: true, reportDir: 'target/site/jacoco/', reportFiles: 'index.html', 
+    reportName: 'Code Coverage', reportTitles: 'Code coverage for the project'])
+    
+    //To see results of testing
+    step([$class: 'JUnitResultArchiver', testResults: '\\target\\surefire-reports\\TEST-*.xml'])
+    
+    //We save the jar file (commented line is from newer version of jenkins, trying tutorial one below)
+    //archiveArtifacts "{project_path}target\\*.jar"     --New version
+    step([$class: 'ArtifactArchiver', 
+        artifacts: "\\target\\*.war",
+        excludes: null])
+}

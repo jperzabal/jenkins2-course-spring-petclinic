@@ -27,7 +27,9 @@ pipeline{
 				input{
 					message "Guardar archivos"
 					ok "Simona la mona"
+					parameters{
 					
+					}
 				}
                 //We save the jar file (commented line is from newer version of jenkins, trying tutorial one below)
                 //archiveArtifacts "{project_path}target\\*.jar"     --New version

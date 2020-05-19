@@ -45,5 +45,8 @@ pipeline{
 		failure{
 			echo ":("
 		}
+		abort{
+			echo "Con calma, rey"
+		}
 	}		
 }
